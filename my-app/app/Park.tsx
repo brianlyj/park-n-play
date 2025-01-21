@@ -1,28 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import {Lesson} from '@/components/Lesson';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
+import { Exit } from '@/components/Exit';
 
 // Get screen dimensions
 const { width } = Dimensions.get('window');
 
-export default function Tutorial() {
+export default function ParkRight() {
+  const [isExpanded, setIsExpanded] = useState(true); // Track expanded state
+
   return (
     <View style={styles.root}>
-      <View style={styles.rectangle1}></View>
-      <Text style={styles.letsGetStarted}>
-        {`Let’s Get Started!`}
-      </Text>
-      <Text
-        style={
-          styles.welcomeText
-        }
+      <Pressable
+        style={[styles.rectangle1, isExpanded ? styles.expanded : styles.collapsed]} // Adjust styles dynamically
+        onPress={() => setIsExpanded(!isExpanded)} // Toggle expanded state on press
       >
-        {`Welcome to the Anywheel Tutorial\n\nBe familiar with the basic knowledge to have an enjoyable ride!`}
-      </Text>
-      <View style={styles.lessonList}>
-        <Lesson title="Park Right I" duration="5 mins" linkTarget='Park'/>
-        <Lesson title="Park Right II" duration="10 mins" linkTarget='Park2'/>
-      </View>
+        <Text style={styles.letsGetStarted}>{`Park Right I`}</Text>
+        {isExpanded && (
+          <Text style={styles.welcomeText}>
+            {`Be a considerate rider!\n\nPark your bicycle responsibly at a designated location so others can easily access and enjoy the service.`}
+          </Text>
+        )}
+      </Pressable>
+      <Exit linkTarget="Tutorial" />
     </View>
   );
 }
@@ -38,8 +37,13 @@ const styles = StyleSheet.create({
     width: '100%', // Responsive width
     height: 225,
     position: 'absolute',
-    top: 0,
     backgroundColor: 'rgba(171, 220, 32, 1)', // Green background
+  },
+  expanded: {
+    height: 225, // Expanded height
+  },
+  collapsed: {
+    height: 80, // Collapsed height to show only title and icon
   },
   letsGetStarted: {
     marginTop: 20,
@@ -59,10 +63,5 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 28, // Adjusted for better readability
     textAlign: 'center', // Center align text
-  },
-  lessonList: {
-    flex: 1,
-    marginTop: 50,
-    padding: 16, // Add padding to the container
   },
 });
