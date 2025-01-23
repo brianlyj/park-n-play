@@ -1,15 +1,65 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Dimensions, Pressable } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 import { Exit } from '@/components/Exit';
 
 // Get screen dimensions
 const { width } = Dimensions.get('window');
 
-export default function ParkRight() {
+export default function App() {
   const [isExpanded, setIsExpanded] = useState(true); // Track expanded state
+  const [image, setImage] = useState<string | null>(null);
+  const [prediction, setPrediction] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'], // Specify only images
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri); // Update state with the selected image URI
+    }
+  };
+
+  const uploadImage = async () => {
+    if (!image) {
+      alert('Please select an image first!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', {
+      uri: image,
+      type: 'image/jpeg', // Adjust if the image type differs
+      name: 'image.jpg',
+    });
+
+    try {
+      const response = await axios.post(
+        'http://192.168.79.20:5000/predict', // Replace with your Flask API URL
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      setPrediction(response.data.predicted_label);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image');
+    }
+  };
 
   return (
-    <View style={styles.root}>
+    <View style={styles.container}>
+      {/* ParkRight Section */}
       <Pressable
         style={[styles.rectangle1, isExpanded ? styles.expanded : styles.collapsed]} // Adjust styles dynamically
         onPress={() => setIsExpanded(!isExpanded)} // Toggle expanded state on press
@@ -22,19 +72,29 @@ export default function ParkRight() {
         )}
       </Pressable>
       <Exit linkTarget="Tutorial" />
+
+      {/* Image Picker Section - Outside of rectangle1 */}
+      <View style={styles.imageSection}>
+        <Pressable style={styles.button} onPress={pickImage}>
+          <Text style={styles.buttonText}>Pick an Image</Text>
+        </Pressable>
+        {image && <Image source={{ uri: image }} style={styles.image} />}
+        <Pressable style={styles.button} onPress={uploadImage}>
+          <Text style={styles.buttonText}>Upload and Predict</Text>
+        </Pressable>
+        {prediction && <Text style={styles.prediction}>Prediction: {prediction}</Text>}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: {
-    width: '100%', // Match parent container width
-    height: 225,
-    position: 'relative',
-    alignItems: 'center', // Center horizontally
+  container: {
+    flex: 1,
+    alignItems: 'center',
   },
   rectangle1: {
-    width: '100%', // Responsive width
+    width: width, // Responsive width
     height: 225,
     position: 'absolute',
     backgroundColor: 'rgba(171, 220, 32, 1)', // Green background
@@ -63,5 +123,34 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 28, // Adjusted for better readability
     textAlign: 'center', // Center align text
+  },
+  imageSection: {
+    marginTop: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginVertical: 20,
+  },
+  prediction: {
+    fontSize: 16,
+    color: 'blue',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'rgba(171, 220, 32, 1)', // Green button color
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: 'white', // Text color inside the button
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
   },
 });

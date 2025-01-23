@@ -1,0 +1,6 @@
+0 Cramped
+1 Half-way
+2 Outside of Box
+3 Weird
+4 Neat
+5 Fallen
