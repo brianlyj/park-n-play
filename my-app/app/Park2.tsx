@@ -64,7 +64,7 @@ export default function App() {
         style={[styles.rectangle1, isExpanded ? styles.expanded : styles.collapsed]} // Adjust styles dynamically
         onPress={() => setIsExpanded(!isExpanded)} // Toggle expanded state on press
       >
-        <Text style={styles.letsGetStarted}>{`Park Right II`}</Text>
+        <Text style={styles.letsGetStarted}>{`Park Master`}</Text>
         {isExpanded && (
           <Text style={styles.welcomeText}>
             {`Be a considerate rider!\n\nPark your bicycle responsibly at a designated location so others can easily access and enjoy the service.`}
@@ -76,7 +76,7 @@ export default function App() {
       {/* Image Picker Section - Outside of rectangle1 */}
       <View style={styles.imageSection}>
         <Pressable style={styles.button} onPress={pickImage}>
-          <Text style={styles.buttonText}>Pick an Image</Text>
+          <Text style={styles.buttonText}>Take a Picture</Text>
         </Pressable>
         {image && <Image source={{ uri: image }} style={styles.image} />}
         <Pressable style={styles.button} onPress={uploadImage}>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Center align text
   },
   imageSection: {
-    marginTop: 300,
+    marginTop: 250,
     alignItems: 'center',
     justifyContent: 'center',
     
@@ -136,20 +136,20 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   prediction: {
-    fontSize: 16,
-    color: 'blue',
+    fontSize: 24,
+    color: 'black',
     marginTop: 20,
   },
   button: {
     backgroundColor: 'rgba(171, 220, 32, 1)', // Green button color
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 25,
+    paddingHorizontal: 50,
     borderRadius: 5,
     marginVertical: 10,
   },
   buttonText: {
     color: 'white', // Text color inside the button
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: '500',
     textAlign: 'center',
   },
