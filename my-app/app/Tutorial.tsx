@@ -20,8 +20,8 @@ export default function Tutorial() {
         {`Welcome to the Anywheel Tutorial\n\nBe familiar with the basic knowledge to have an enjoyable ride!`}
       </Text>
       <View style={styles.lessonList}>
-        <Lesson title="Park Right I" duration="5 mins" linkTarget='Park'/>
-        <Lesson title="Park Right II" duration="10 mins" linkTarget='Park2'/>
+        <Lesson title="Park Right" duration="2 mins" linkTarget='Park'/>
+        <Lesson title="Park Master" duration="1 min" linkTarget='Park2'/>
       </View>
     </View>
   );
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: 'rgba(245, 245, 245, 1)', // White color
     fontFamily: 'SF Pro Display',
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: '400',
     lineHeight: 28, // Adjusted for better readability
     textAlign: 'center', // Center align text

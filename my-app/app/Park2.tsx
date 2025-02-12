@@ -42,7 +42,7 @@ export default function App() {
 
     try {
       const response = await axios.post(
-        'http://192.168.79.20:5000/predict', // Replace with your Flask API URL
+        'http://192.168.189.124:5000/predict', // Replace with your Flask API URL
         formData,
         {
           headers: {
@@ -67,7 +67,7 @@ export default function App() {
         <Text style={styles.letsGetStarted}>{`Park Master`}</Text>
         {isExpanded && (
           <Text style={styles.welcomeText}>
-            {`Be a considerate rider!\n\nPark your bicycle responsibly at a designated location so others can easily access and enjoy the service.`}
+            {`Be a considerate rider!\nPark your bicycle responsibly at a designated location so others can easily access and enjoy the service.`}
           </Text>
         )}
       </Pressable>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: 'rgba(245, 245, 245, 1)', // White color
     fontFamily: 'SF Pro Display',
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: '400',
     lineHeight: 28, // Adjusted for better readability
     textAlign: 'center', // Center align text
@@ -142,10 +142,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'rgba(171, 220, 32, 1)', // Green button color
-    paddingVertical: 25,
-    paddingHorizontal: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
     borderRadius: 5,
-    marginVertical: 10,
+    marginVertical: 2,
   },
   buttonText: {
     color: 'white', // Text color inside the button

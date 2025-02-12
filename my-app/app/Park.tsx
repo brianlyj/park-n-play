@@ -23,7 +23,7 @@ export default function ParkRight() {
         resizeMode="cover" // Scale image to cover the entire screen
       />
       <WebView
-        source={{ uri: 'http://192.168.79.20:5000/video_feed' }} // Update IP address if needed
+        source={{ uri: 'http://192.168.189.124:5000/video_feed' }} // Update IP address if needed
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
@@ -36,7 +36,7 @@ export default function ParkRight() {
         <Text style={styles.letsGetStarted}>{`Park Right`}</Text>
         {isExpanded && (
           <Text style={styles.welcomeText}>
-            {`Share the road responsibly!\n\nPlay the fun strategy game and master the art of efficient bicycle parking to optimise parking space.`}
+            {`Share the road responsibly!\nPlay the fun strategy game and master the art of efficient bicycle parking to optimise parking space.`}
           </Text>
         )}
       </Pressable>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: 'rgba(245, 245, 245, 1)', // White color
     fontFamily: 'SF Pro Display',
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: '400',
     lineHeight: 28, // Adjusted for better readability
     textAlign: 'center', // Center align text
