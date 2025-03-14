@@ -23,7 +23,7 @@ export default function ParkRight() {
         resizeMode="cover" // Scale image to cover the entire screen
       />
       <WebView
-        source={{ uri: 'http://192.168.189.124:5000/video_feed' }} // Update IP address if needed
+        source={{ uri: 'http://192.168.79.20:5000/video_feed' }} // Update IP address if needed
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}

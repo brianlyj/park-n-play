@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, StyleSheet, Dimensions, Pressable } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
@@ -12,9 +12,19 @@ export default function App() {
   const [image, setImage] = useState<string | null>(null);
   const [prediction, setPrediction] = useState<string | null>(null);
 
+  // Request camera permissions
+  useEffect(() => {
+    (async () => {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need camera permissions to make this work!');
+      }
+    })();
+  }, []);
+
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'], // Specify only images
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Specify only images
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -23,13 +33,13 @@ export default function App() {
     console.log(result);
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri); // Update state with the selected image URI
+      setImage(result.assets[0].uri); // Update state with the captured image URI
     }
   };
 
   const uploadImage = async () => {
     if (!image) {
-      alert('Please select an image first!');
+      alert('Please take a picture first!');
       return;
     }
 
@@ -42,7 +52,7 @@ export default function App() {
 
     try {
       const response = await axios.post(
-        'http://192.168.189.124:5000/predict', // Replace with your Flask API URL
+        'http://192.168.79.20:5000/predict', // Replace with your Flask API URL
         formData,
         {
           headers: {
